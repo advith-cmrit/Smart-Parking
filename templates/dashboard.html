@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="grid">
+    <div class="card">
+        <h3>Total Spots</h3>
+        <p class="metric">{{ total_spots }}</p>
+    </div>
+    <div class="card">
+        <h3>Occupied Spots</h3>
+        <p class="metric">{{ occupied_spots }}</p>
+    </div>
+    <div class="card">
+        <h3>Free Spots</h3>
+        <p class="metric">{{ free_spots }}</p>
+    </div>
+    <div class="card">
+        <h3>Active Sessions</h3>
+        <p class="metric">{{ active_sessions }}</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Vehicle Entry</h2>
+        <form id="entry-form">
+            <label>License Plate</label>
+            <input type="text" name="license_plate" required placeholder="e.g. TN09AB1234">
+
+            <label>Vehicle Type</label>
+            <select name="vehicle_type">
+                <option value="car">Car</option>
+                <option value="bike">Bike</option>
+                <option value="truck">Truck</option>
+            </select>
+
+            <label>Spot Number</label>
+            <input type="text" name="spot_number" required placeholder="e.g. A1">
+
+            <button type="submit" class="btn btn-primary full-width">Register Entry</button>
+            <div class="form-message" id="entry-message"></div>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Vehicle Exit</h2>
+        <form id="exit-form">
+            <label>License Plate</label>
+            <input type="text" name="license_plate" required placeholder="e.g. TN09AB1234">
+
+            <button type="submit" class="btn btn-primary full-width">Register Exit</button>
+            <div class="form-message" id="exit-message"></div>
+        </form>
+
+        <div id="exit-summary" class="exit-summary hidden">
+            <h3>Exit Summary</h3>
+            <p><strong>Spot:</strong> <span id="summary-spot"></span></p>
+            <p><strong>Exit Time:</strong> <span id="summary-exit-time"></span></p>
+            <p><strong>Total Fee:</strong> ₹<span id="summary-fee"></span></p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Active Parking Sessions</h2>
+    <button id="refresh-active" class="btn btn-secondary small">Refresh</button>
+    <table class="table" id="active-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>License Plate</th>
+                <th>Type</th>
+                <th>Entry Time</th>
+                <th>Spot</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Search Sessions</h2>
+        <form id="search-form">
+            <label>License Plate</label>
+            <input type="text" name="license_plate" placeholder="Optional">
+
+            <label>Parking ID</label>
+            <input type="number" name="parking_id" placeholder="Optional">
+
+            <button type="submit" class="btn btn-secondary full-width">Search</button>
+        </form>
+
+        <table class="table" id="search-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Plate</th>
+                    <th>Type</th>
+                    <th>Entry</th>
+                    <th>Exit</th>
+                    <th>Fee</th>
+                    <th>Spot</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    {% if role == 'admin' %}
+    <div class="card">
+        <h2>Reports (Admin)</h2>
+        <form id="report-form">
+            <label>Start Date</label>
+            <input type="date" name="start_date">
+
+            <label>End Date</label>
+            <input type="date" name="end_date">
+
+            <button type="submit" class="btn btn-secondary full-width">Generate Report</button>
+        </form>
+
+        <div class="report-summary">
+            <p><strong>Total Earnings:</strong> ₹<span id="report-total">0</span></p>
+        </div>
+
+        <table class="table" id="report-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Plate</th>
+                    <th>Type</th>
+                    <th>Entry</th>
+                    <th>Exit</th>
+                    <th>Fee</th>
+                    <th>Spot</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

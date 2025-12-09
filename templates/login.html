@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h1>Parking Management Login</h1>
+        <form method="POST" class="auth-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required placeholder="Enter username">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter password">
+
+            <button type="submit" class="btn btn-primary full-width">Login</button>
+
+            <p class="hint">
+                Default admin: <strong>admin / admin123</strong>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}
